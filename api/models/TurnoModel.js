@@ -8,7 +8,7 @@ const turnoSchemna = new Schema(
         _id:                { type: ObjectId, auto:true },
         fecha :             { type: Date,  unique:true, requared:true },
         patente:            { type: String, required: true }, 
-        //itemsCalificadosId: { type: ObjectId, ref:'item_calificaciones' }, 
+        sucursal:           { type: ObjectId, ref:'sucursales'}, 
         usuario :           { type: ObjectId, ref:'usuarios'}
     },
     { timestamps: true}

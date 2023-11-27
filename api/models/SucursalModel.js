@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const itemCalificacionSchema = new Schema( 
+const sucursalSchema = new Schema( 
     {
         _id:         { type: ObjectId, auto:true } ,
-        observacion: { type: String, required: true },
+        codigo: { type: String, unique:true, required: true },
         descripcion: { type: String, required: false }
     },
     { timestamps: true}
 );
 
-const ItemCalificacion = mongoose.model("item_calificaciones", itemCalificacionSchema);
+const Sucursal = mongoose.model("sucursales", sucursalSchema);
 
-module.exports = ItemCalificacion;
+module.exports = Sucursal;
