@@ -1,11 +1,11 @@
 
-const UsuarioRepository = require('../Repository/UsuarioRepository'); 
+const UsuarioService = require('../services/UsuarioService'); 
 const BaseController = require('./BaseController');
 
 class UsuarioController extends BaseController{
 
     constructor(){
-        super (UsuarioRepository);    
+        super (UsuarioService);    
     }
 
 }

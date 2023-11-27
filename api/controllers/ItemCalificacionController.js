@@ -1,11 +1,11 @@
 
-const ItemCalificacionRepository = require('../Repository/ItemCalificacionRepository'); 
+const ItemCalificacionService = require('../services/ItemCalificacionService'); 
 const BaseController = require('./BaseController');
 
 class ItemCalificacionController extends BaseController{
 
     constructor(){
-        super (ItemCalificacionRepository);    
+        super (ItemCalificacionService);    
     }
 
 }

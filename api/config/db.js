@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const uri = process.env.MONGODB_URL || "mongodb+srv://nvalente2001:mongo@cluster0.rcws7ng.mongodb.net/TP_API?retryWrites=true&w=majority"; 
-const port = process.env.PORT; // || 3000;             
+const uri = process.env.MONGODB_URL;
+const port = process.env.PORT; 
 
 async function main(){
 

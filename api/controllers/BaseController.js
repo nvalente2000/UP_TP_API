@@ -1,13 +1,13 @@
 
 class BaseController {
 
-    constructor(repoClass){
-        this.repo = new repoClass();
+    constructor(serviceClass){
+        this.service = new serviceClass();
     }
     
     getAll = async (req, res) => {
 
-        await this.repo.findAll().then( docs => {
+        await this.service.findAll().then( docs => {
             return res.status(200).send({docs});       
         }).catch( err => {
             return res.status(500).send({message:err.message }); 
@@ -17,7 +17,7 @@ class BaseController {
     getById = async (req, res) => {
         
         let id = req.params.id;
-        await this.repo.findById(id).then( docs => {
+        await this.service.findById(id).then( docs => {
             return res.status(200).send({docs});       
         }).catch( err => {
             return res.status(500).send({message:err.message }); 
@@ -26,7 +26,7 @@ class BaseController {
 
     add = async(req, res) => {
 
-        await this.repo.create(req.body).then( docs => {
+        await this.service.create(req.body).then( docs => {
             return res.status(201).send({docs});       
         }).catch( err => {
             return res.status(500).send({message:err.message }); 
@@ -36,7 +36,7 @@ class BaseController {
     update = async(req, res) => {
 
         const body = req.body;
-        await this.repo.update(body).then( docs => {
+        await this.service.update(body).then( docs => {
             return res.status(200).send({docs});       
         }).catch( err => {
             return res.status(500).send({message:err.message }); 
@@ -46,7 +46,7 @@ class BaseController {
     deleteById = async(req, res) => {
         
         const id = req.params.id;
-        await this.repo.deleteById(id).then( docs => {
+        await this.service.deleteById(id).then( docs => {
             return res.status(201).send({docs});       
         }).catch( err => {
             return res.status(500).send({message:err.message }); 
