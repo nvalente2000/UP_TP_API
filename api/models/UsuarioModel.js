@@ -7,7 +7,7 @@ const usuarioSchema = new Schema(
     {
         _id:        { type: ObjectId, auto:true } ,
         dni:        { type: String, unique:true, required: true },
-        email:      { type: String, required:true },
+        email:      { type: String,  unique:true, required:true },
         nombre:     { type: String, requared:false },
         apellido:   { type: String, requared:false },
         password:   { type: String, requared:true },

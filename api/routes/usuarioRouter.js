@@ -10,7 +10,21 @@ router.get("/:id", (req,res) => {usuarioController.getById(req, res); });
 router.post( "/", (req, res) => {usuarioController.add(req, res); } );
 router.put("/", (req,res) => {usuarioController.update(req, res); }); 
 router.delete("/:id", (req,res) => {usuarioController.deleteById(req, res); }); 
+router.get("/:id/turnos", (req,res) => {usuarioController.getAllTurnos(req, res); }); 
+
 //router.patch("/:id", (req,res) => {usuarioController.update(req, res); }); 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
