@@ -1,6 +1,8 @@
 
 const UsuarioService = require('../services/UsuarioService'); 
 const BaseController = require('./BaseController');
+const {StatusCodes } = require('http-status-codes');
+
 
 class UsuarioController extends BaseController{
 
@@ -8,15 +10,60 @@ class UsuarioController extends BaseController{
         super (UsuarioService);    
     }
 
-    getAllTurnos = async(req, res) => {
+    getByDNI = async(req, res) => {
         
-        const id = req.params.id;
-        await this.service.findByIdAllTurnos(id).then( docs => {
-            return res.status(200).send({docs});       
+        const dni = req.params.dni;
+        await this.service.findByDNI(dni).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }   
 
+    getAllTurnosByDNI = async(req, res) => {       
+        
+        const dni = req.params.dni;
+        var usuario; 
+        
+        // Busco ID interno usuario
+        try {
+            usuario = await this.service.findByDNI(dni);  
+            if (!usuario) 
+                return res.status(StatusCodes.NOT_FOUND).send({message:"Usuario no existe." }); 
+        } catch (err){
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }
+
+        // BUSTO TODOS los turnos por ID interno usuario
+        await this.service.findByIdAllTurnos(usuario._id).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+
+    }   
+
+
+    deleteByDNI = async(req, res) => {       
+        
+        const dni = req.params.dni;
+        var usuario; 
+        
+        // Busco ID interno usuario
+        try {
+            usuario = await this.service.findByDNI(dni);  
+            if (!usuario) 
+                return res.status(StatusCodes.NOT_FOUND).send({message:"Usuario no existe." }); 
+        } catch (err){
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }
+      
+        // DELETE por ID interno usuario
+        await this.service.deleteById(usuario._id).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+    }   
 }
 module.exports = UsuarioController;

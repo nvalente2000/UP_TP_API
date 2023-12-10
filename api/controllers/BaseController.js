@@ -1,3 +1,4 @@
+const {StatusCodes } = require('http-status-codes');
 
 class BaseController {
 
@@ -8,9 +9,9 @@ class BaseController {
     getAll = async (req, res) => {
 
         await this.service.findAll().then( docs => {
-            return res.status(200).send({docs});       
+            return res.status(StatusCodes.OK).send({docs}); //200      
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); //500
         }); 
     }
 
@@ -18,18 +19,18 @@ class BaseController {
         
         let id = req.params.id;
         await this.service.findById(id).then( docs => {
-            return res.status(200).send({docs});       
+            return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }
 
     add = async(req, res) => {
 
         await this.service.create(req.body).then( docs => {
-            return res.status(201).send({docs});       
+            return res.status(StatusCodes.CREATED).send({docs});       
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }
 
@@ -37,9 +38,9 @@ class BaseController {
 
         const body = req.body;
         await this.service.update(body).then( docs => {
-            return res.status(200).send({docs});       
+            return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }
 
@@ -47,9 +48,9 @@ class BaseController {
         
         const id = req.params.id;
         await this.service.deleteById(id).then( docs => {
-            return res.status(201).send({docs});       
+            return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
-            return res.status(500).send({message:err.message }); 
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }   
 }

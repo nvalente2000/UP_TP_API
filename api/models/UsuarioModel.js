@@ -16,7 +16,7 @@ const usuarioSchema = new Schema(
             descripcion:{ type: String, requared:false}
         }]
     },
-    { timestamps: true}
+    { versionKey:false, timestamps: true }
 );
 
 const Usuario = mongoose.model('usuarios', usuarioSchema);

@@ -5,6 +5,11 @@ class UsuarioRepository extends BaseRepository {
     constructor(){
         super(Usuario);
     }
+    
+    findByDNI (dni){
+        return this.collection.findOne( { dni:dni }).exec(); 
+    }
 }
+
 
 module.exports = UsuarioRepository;

@@ -1,9 +1,13 @@
 const BaseRepository = require('./BaseRepository'); 
-const SucursalModel = require('../models/SucursalModel'); 
+const Sucursal = require('../models/SucursalModel'); 
 
 class SucursalRepository extends BaseRepository {
     constructor(){
-        super(SucursalModel);
+        super(Sucursal);
+    }
+
+    findByCodigo (codigo){
+        return this.collection.findOne( { codigo:codigo }).exec(); 
     }
 }
 

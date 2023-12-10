@@ -6,11 +6,12 @@ const usuarioController = new UsuarioController();
 const router = express.Router();
 
 router.get("/", (req,res) => { usuarioController.getAll(req, res); }); 
-router.get("/:id", (req,res) => {usuarioController.getById(req, res); }); 
+router.get("/:dni", (req,res) => {usuarioController.getByDNI(req, res); }); 
 router.post( "/", (req, res) => {usuarioController.add(req, res); } );
 router.put("/", (req,res) => {usuarioController.update(req, res); }); 
-router.delete("/:id", (req,res) => {usuarioController.deleteById(req, res); }); 
-router.get("/:id/turnos", (req,res) => {usuarioController.getAllTurnos(req, res); }); 
+router.delete("/:dni", (req,res) => {usuarioController.deleteByDNI(req, res); }); 
+
+router.get("/:dni/turnos", (req,res) => {usuarioController.getAllTurnosByDNI(req, res); }); 
 
 //router.patch("/:id", (req,res) => {usuarioController.update(req, res); }); 
 

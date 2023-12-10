@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const uri = process.env.MONGODB_URL;
-const port = process.env.PORT; 
 
 async function main(){
 
