@@ -9,9 +9,9 @@ class BaseController {
     getAll = async (req, res) => {
 
         await this.service.findAll().then( docs => {
-            return res.status(StatusCodes.OK).send({docs}); //200      
+            return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); //500
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }
 

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", (req,res) => { usuarioController.getAll(req, res); }); 
 router.get("/:dni", (req,res) => {usuarioController.getByDNI(req, res); }); 
 router.post( "/", (req, res) => {usuarioController.add(req, res); } );
-router.put("/", (req,res) => {usuarioController.update(req, res); }); 
+router.put("/:dni", (req,res) => {usuarioController.updateByDNI(req, res); }); 
 router.delete("/:dni", (req,res) => {usuarioController.deleteByDNI(req, res); }); 
 
 router.get("/:dni/turnos", (req,res) => {usuarioController.getAllTurnosByDNI(req, res); }); 

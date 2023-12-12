@@ -1,13 +1,13 @@
 const BaseService = require('./BaseSerivice');
-const TurnoService = require ('./TurnoService');
+//const TurnoService = require('./TurnoService');
 const UsuarioRepository = require('../Repository/UsuarioRepository'); 
-
+const TurnoRepository = require('../Repository/TurnoRepository'); 
 
 class UsuarioService extends BaseService{
 
     constructor(){
         super (UsuarioRepository);    
-        this.serviceTurno = new TurnoService();
+        this.turnoRepository = new TurnoRepository();
     }
 
     async findByDNI(dni){
@@ -20,11 +20,12 @@ class UsuarioService extends BaseService{
 
     async findByIdAllTurnos(id){
         try{      
-            return await this.serviceTurno.findAllByUserId(id);
+            return await this.turnoRepository.findAllByUserId(id); 
         } catch(err){
-            throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
+            throw new ExternalServiceException('Ocurrio un problema externo: '+err.message, err);
         }
     }
+
 }
 
 module.exports = UsuarioService;

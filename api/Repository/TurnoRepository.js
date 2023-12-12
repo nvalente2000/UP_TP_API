@@ -8,7 +8,7 @@ class TurnoRepository extends BaseRepository {
 
     findByFecha (fecha){
         return this.collection.findOne( { fecha:fecha }).exec(); 
-    }
+    }              
 
     findAllByUserId (id){
         return this.collection.find( { usuarioId:id }).exec(); 

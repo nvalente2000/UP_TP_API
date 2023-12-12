@@ -1,4 +1,3 @@
-
 const SucursalService = require('../services/SucursalService'); 
 const BaseController = require('./BaseController');
 const {StatusCodes } = require('http-status-codes');
@@ -29,7 +28,6 @@ class SucursalController extends BaseController{
             sucursal = await this.service.findByCodigo(codigo);  
             if (!sucursal) 
                 return res.status(StatusCodes.NOT_FOUND).send({message:"sucursal no existe." }); 
-
         } catch (err){
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }
@@ -40,9 +38,7 @@ class SucursalController extends BaseController{
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
-
     }   
-
 
     deleteByCodigo = async(req, res) => {       
         
@@ -66,5 +62,29 @@ class SucursalController extends BaseController{
         }); 
     }   
 
+    updateByCodigo = async(req, res) => {       
+        
+        const codigo = req.params.codigo;
+        const body = req.body;
+       
+        // Busco ID interno sucursal
+        try {
+            var sucursal = await this.service.findByCodigo(codigo); 
+            if (!sucursal) 
+                return res.status(StatusCodes.NOT_FOUND).send({message:"sucursal no existe." }); 
+            body._id = sucursal._id;
+        } catch (err){
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }
+      
+        // DELETE por ID interno sucursal
+        await this.service.update(body).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+    }   
+  
 }
+
 module.exports = SucursalController;

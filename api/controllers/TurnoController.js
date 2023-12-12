@@ -1,13 +1,12 @@
 
 const TurnoService = require('../services/TurnoService'); 
 const BaseController = require('./BaseController');
-const {StatusCodes } = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 
 class TurnoController extends BaseController{
 
     constructor(){
         super (TurnoService);    
-
     }
 
     getByFecha = async(req, res) => {
@@ -19,6 +18,19 @@ class TurnoController extends BaseController{
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }   
+
+
+    addByUsuarioAndSucursal = async(req, res) => {
+
+        const body = req.body;
+
+        await this.service.addByUsuarioAndSucursal(body).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+    
+    }
 
     deleteByFecha = async(req, res) => {       
         
@@ -42,27 +54,29 @@ class TurnoController extends BaseController{
         }); 
     }   
 
-    getAllByUserId = async (req, res) => {
-        let id = req.params.id;
-        console.log(id);
-        await this.service.findAllByUserId(id).then( docs => {
+    updateByFecha = async(req, res) => {       
+        
+        const fecha = req.params.fecha;
+        var body = req.body;
+        
+        // Busco ID interno usuario
+        try {
+            var turno = await this.service.findByFecha(fecha);  
+            if (!turno) 
+                return res.status(StatusCodes.NOT_FOUND).send({message:"Fecha no existe turno." }); 
+            body._id = turno._id;
+
+        } catch (err){
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }
+      
+        // UPDATE por ID interno turno
+        await this.service.update(body).then( docs => {
             return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
-    }
-
-    getAllBySucursalId = async (req, res) => {
-        let id = req.params.id;
-        console.log(id);
-        await this.service.findAllBySucursarId(id).then( docs => {
-            return res.status(StatusCodes.OK).send({docs});       
-        }).catch( err => {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
-        }); 
-    }
-
-
+    }   
 
 }
 module.exports = TurnoController;
