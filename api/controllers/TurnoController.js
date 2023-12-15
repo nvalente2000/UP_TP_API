@@ -25,7 +25,7 @@ class TurnoController extends BaseController{
         const body = req.body;
 
         await this.service.addByUsuarioAndSucursal(body).then( docs => {
-            return res.status(StatusCodes.OK).send({docs});       
+            return res.status(StatusCodes.OK).send(body);       
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
@@ -77,6 +77,36 @@ class TurnoController extends BaseController{
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }   
+
+    getAllLibres = async (req, res) => {
+
+        const limite = req.params.limite;
+        
+        await this.service.getTurnosLibres(limite).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+    }
+
+    /*
+    getPuntajeEvaluacion = async (req, res) => {
+
+    }
+
+    getAllItemsVehiculo = async (req, res) => {
+
+    }
+
+    saveItemsVehiculo = async (req, res) => {
+
+    }
+
+    uptadeItemsVehiculo = async (req, res) => {
+
+    }
+
+*/
 
 }
 module.exports = TurnoController;
