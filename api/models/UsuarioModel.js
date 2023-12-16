@@ -1,4 +1,6 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
+const encryption = require('mongoose-encryption');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -18,6 +20,8 @@ const usuarioSchema = new Schema(
     },
     { versionKey:false, timestamps: true }
 );
+
+usuarioSchema.plugin( encryption, { secret:process.env.SECRET , encryptedField:['password'] });
 
 const Usuario = mongoose.model('usuarios', usuarioSchema);
 
