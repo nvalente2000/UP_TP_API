@@ -34,10 +34,8 @@ class TurnoService extends BaseService{
 
                     console.log("Itero elemento: " + element);
                     // Completo con UserID y SucursalID y guardo
-                    //console.log(`Elemento ${index + 1}:`, element);
                     await this.completoWithUserId(element);
                     await this.completoWithSucursalId(element);
-                    //console.log(`Elemento completado ${index + 1}:`, body[index]);
 
                     // Agrego turno si esta disponible
                     if (await this.estaTurnoSolicitadoEnListaDelibres(element.fecha) ){
@@ -64,22 +62,6 @@ class TurnoService extends BaseService{
         } catch (err){
             throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
         }
-
-        // Guardo verificando que sea un turno disponible. 
-        /*
-        try{      
-            var turnosAgendados = await this.findAll();  
-            let fechaSolicitada = moment (body.fecha);
-
-            if ( this.estaTurnoSolicitadoDisponible(fechaSolicitada, turnosAgendados)) {
-                return await this.create(body); 
-            } else {
-                throw new ExternalServiceException('Horario indisponible');
-            };
-            
-        } catch(err){
-            throw new ExternalServiceException('Ocurrio un problema externo: '+err.message, err);
-        }*/
     }   
     
     async completoWithSucursalId (model){
@@ -128,7 +110,7 @@ class TurnoService extends BaseService{
                     if ( this.estaTurnoSolicitadoDisponible(fechaHoraTurno, turnosAgendados)) {
                         turnos.push(fechaHoraTurno.format('YYYY-MM-DD HH:mm'));
                     };
-              });
+                });
             }
           
             return turnos;
@@ -177,6 +159,87 @@ class TurnoService extends BaseService{
         return false; 
     }
 
+    async getItemsVehiculo ( fecha ){
+        try {
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) 
+                throw new ExternalServiceException('Turno no existe');
+            
+            // Agrego los items
+            return turno.itemsVehiculo; 
+
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema al obtener los items del vehiculo: '+ err.message, err);
+        }
+    }    
+
+
+
+    async addItemsVehiculo ( fecha, items){
+        try {
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) 
+                throw new ExternalServiceException('Turno no existe');
+            
+            // Agrego los items
+            turno.itemsVehiculo = items;
+
+            // Actualizo el turno en la base. 
+            return await this.update(turno); 
+
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema al agregar items al vehiculo: '+ err.message, err);
+        }
+    }    
+
+    async deleteItemsVehiculo ( fecha ){
+        try {
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) 
+                throw new ExternalServiceException('Turno no existe: ');
+            
+            // Agrego los items
+            turno.itemsVehiculo = [];
+
+            // Actualizo el turno en la base. 
+            return await this.update(turno); 
+
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema al eliminar items al vehiculo: '+ err.message, err);
+        }
+    }    
+
+
+    async getPuntuacion ( fecha ){
+        try {
+
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) {
+                throw new ExternalServiceException('Turno no existe.');
+            }
+            // Agrego los items
+            const items = turno.itemsVehiculo; 
+            var puntaje = 0 ;
+            
+            if (items.length > 0){
+                items.forEach((item) => {
+                    puntaje = item.puntaje + puntaje;
+                });
+            } else {
+                throw new ExternalServiceException('El turno no tiene items evaluados.');
+            }
+
+            // Actualizo el turno en la base. 
+            return puntaje;
+
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema al eliminar items al vehiculo: '+ err.message, err);
+        }
+    }    
 }
 
 module.exports = TurnoService;

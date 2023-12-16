@@ -9,13 +9,12 @@ router.post( "/", (req, res) => {turnoController.addByUsuarioAndSucursal(req, re
 router.put("/:fecha", (req,res) => {turnoController.updateByFecha(req, res); }); 
 router.delete("/:fecha", (req,res) => {turnoController.deleteByFecha(req, res); }); 
 
-router.get("/:id/evaluacion/", (req,res) => { turnoController.getAllTurnosLibres(req, res); });  // Puntaje resultante de la evaluacion. 
-router.get("/:id/evaluacion/itemsVehiculo/", (req,res) => { turnoController.getAllTurnosLibres(req, res); });  // Detallle de los items evaluados
-router.post("/:id/evaluacion/itemsVehiculo/", (req,res) => { turnoController.getAllTurnosLibres(req, res); });  // Carga de items evaluados.
-router.put("/:id/evaluacion/itemsVehiculo/", (req,res) => { turnoController.getAllTurnosLibres(req, res); });  // Uptate items evaluados
+router.get("/:fecha/itemsVehiculo/", (req,res) => { turnoController.getItemsEvaluadosVehiculo(req, res); });  
+router.post("/:fecha/itemsVehiculo/", (req,res) => { turnoController.addItemsEvaluadosVehiculo(req, res); }); 
+router.delete("/:fecha/itemsVehiculo/", (req,res) => { turnoController.deleteItemsEvaluadosVehiculo(req, res); });  
 
 router.get("/agenda/:limite", (req,res) => { turnoController.getAllLibres(req, res); });  // Tunos libres en agenda. 
 
-//router.patch("/:id", (req,res) => {turnoController.update(req, res); }); 
+router.get("/:fecha/evaluacion/", (req,res) => { turnoController.getPuntuacion(req, res); });  // Puntaje resultante de la evaluacion. 
 
 module.exports = router;

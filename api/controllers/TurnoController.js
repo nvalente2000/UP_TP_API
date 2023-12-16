@@ -89,24 +89,66 @@ class TurnoController extends BaseController{
         }); 
     }
 
-    /*
-    getPuntajeEvaluacion = async (req, res) => {
+    addItemsEvaluadosVehiculo = async (req, res) => {
 
+        console.log("PASSO");
+        const fechaTurno = req.params.fecha;
+        const items = req.body;
+        
+        await this.service.addItemsVehiculo(fechaTurno, items).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
     }
 
-    getAllItemsVehiculo = async (req, res) => {
+    addItemsEvaluadosVehiculo = async (req, res) => {
 
+        console.log("PASSO ADD");
+        const fechaTurno = req.params.fecha;
+        const items = req.body;
+        
+        await this.service.addItemsVehiculo(fechaTurno, items).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
     }
 
-    saveItemsVehiculo = async (req, res) => {
+    deleteItemsEvaluadosVehiculo = async (req, res) => {
 
+        const fechaTurno = req.params.fecha;
+        console.log(fechaTurno);
+       
+        await this.service.deleteItemsVehiculo(fechaTurno).then( docs => {
+            return res.status(StatusCodes.OK).send({docs});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
     }
 
-    uptadeItemsVehiculo = async (req, res) => {
+    
+    getItemsEvaluadosVehiculo = async (req, res) => {
 
+        const fechaTurno = req.params.fecha;
+       
+        await this.service.getItemsVehiculo(fechaTurno).then( itemsVehiculo => {
+            return res.status(StatusCodes.OK).send({itemsVehiculo});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
     }
 
-*/
+    getPuntuacion = async (req, res) => {
+
+        const fechaTurno = req.params.fecha;
+       
+        await this.service.getPuntuacion(fechaTurno).then( puntaje => {
+            return res.status(StatusCodes.OK).send({puntaje});       
+        }).catch( err => {
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
+        }); 
+    }
 
 }
 module.exports = TurnoController;
