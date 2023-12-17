@@ -27,19 +27,15 @@ class TurnoService extends BaseService{
     async addByUsuarioAndSucursal (body) {       
 
         try {
-            var turnosLibres = await this.getTurnosLibres(this.diasMaxAFrente);  
-
             if (Array.isArray(body)) {
+                
                 await Promise.all(body.map(async (element, index) => {
-
-                    console.log("Itero elemento: " + element);
                     // Completo con UserID y SucursalID y guardo
                     await this.completoWithUserId(element);
                     await this.completoWithSucursalId(element);
 
                     // Agrego turno si esta disponible
                     if (await this.estaTurnoSolicitadoEnListaDelibres(element.fecha) ){
-                        console.log("GUARDO");
                         return await this.create(element); 
                     }
                     else {
@@ -53,12 +49,33 @@ class TurnoService extends BaseService{
                 await this.completoWithSucursalId(body);
 
                 // Agrego turno si esta disponible
-                if (this.estaTurnoSolicitadoEnListaDelibres(ody.fecha) )
+                if (this.estaTurnoSolicitadoEnListaDelibres(body.fecha) )
                     return await this.create(body); 
                 else 
                     throw new ExternalServiceException('Horario indisponible');
 
             }
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
+        }
+    }   
+
+    async updateByFechaAndVerificacionTurnoLibre (fecha, body) {       
+
+        try {           
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) 
+                throw new ExternalServiceException('Turno no existe');
+
+            // Agrego turno si esta disponible          
+            if (await this.estaTurnoSolicitadoEnListaDelibres(body.fecha) ){
+                return await this.create(body); 
+            }
+            else {
+                throw new ExternalServiceException('Horario indisponible');
+            }
+        
         } catch (err){
             throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
         }
@@ -87,7 +104,6 @@ class TurnoService extends BaseService{
             throw new ExternalServiceException('Ocurrio un problema con el Nombre Usuario: '+ err.message, err);
         }  
     }
-
 
     async getTurnosLibres (diasParaFrente){
         
@@ -131,7 +147,6 @@ class TurnoService extends BaseService{
             //console.log("Iteracion: " + ". Horario libre: " +fechaTurnoSolicitado.format('YYYY-MM-DD HH:mm') + " Horario Agenda: " +  fechaAgendada.format('YYYY-MM-DD HH:mm'));
             if ( fechaTurnoSolicitado.isSame(fechaAgendada, 'minute' ) ){
                 estaTurno = true;
-                console.log("true");
             }
         });
         if (estaTurno)
@@ -140,23 +155,20 @@ class TurnoService extends BaseService{
     }
 
     async estaTurnoSolicitadoEnListaDelibres (fechaTurnoSolicitado ){
-        console.log(this.diasMaxAFrente);
+
         var turnosLibres = await this.getTurnosLibres(this.diasMaxAFrente);  
         let fechaSolicitada = moment (fechaTurnoSolicitado);   
 
         let estaTurno = false; 
         turnosLibres.forEach (turno => {
             let fechaAgendada = moment (turno);            
-            console.log("Horario Solicitado: " + fechaSolicitada.format('YYYY-MM-DD HH:mm') + " Horario Libre: " +  fechaAgendada.format('YYYY-MM-DD HH:mm'));
-             
+            //console.log("Horario Solicitado: " + fechaSolicitada.format('YYYY-MM-DD HH:mm') + " Horario Libre: " +  fechaAgendada.format('YYYY-MM-DD HH:mm'));             
             if ( fechaSolicitada.isSame(fechaAgendada, 'minute' ) ){
                 estaTurno = true;
             }
         });
 
-        if (estaTurno)
-            return true;
-        return false; 
+        return estaTurno;
     }
 
     async getItemsVehiculo ( fecha ){
@@ -174,14 +186,30 @@ class TurnoService extends BaseService{
         }
     }    
 
-
-
     async addItemsVehiculo ( fecha, items){
         try {
             // Obtengo el turno almacenado. 
             var turno = await this.findByFecha(fecha);  
-            if (!turno) 
-                throw new ExternalServiceException('Turno no existe');
+            if (!turno) throw new ExternalServiceException('Turno no existe');
+            
+            // Verifico que no existe items 
+            const cant = turno.itemsVehiculo.length;
+            if ( cant > 0 ) throw new ExternalServiceException('Existem items evaluados');
+            turno.itemsVehiculo = items;
+
+            // Actualizo el turno en la base. 
+            return await this.update(turno); 
+
+        } catch (err){
+            throw new ExternalServiceException('Ocurrio un problema al agregar items al vehiculo: '+ err.message, err);
+        }
+    }    
+
+    async updateItemsVehiculo ( fecha, items){
+        try {
+            // Obtengo el turno almacenado. 
+            var turno = await this.findByFecha(fecha);  
+            if (!turno) throw new ExternalServiceException('Turno no existe');
             
             // Agrego los items
             turno.itemsVehiculo = items;
@@ -212,8 +240,7 @@ class TurnoService extends BaseService{
         }
     }    
 
-
-    async getPuntuacion ( fecha ){
+    async getEvaluacion ( fecha ){
         try {
 
             // Obtengo el turno almacenado. 
@@ -221,24 +248,49 @@ class TurnoService extends BaseService{
             if (!turno) {
                 throw new ExternalServiceException('Turno no existe.');
             }
-            // Agrego los items
+
+            // Valido que el turno fue evaluado
             const items = turno.itemsVehiculo; 
-            var puntaje = 0 ;
-            
-            if (items.length > 0){
-                items.forEach((item) => {
-                    puntaje = item.puntaje + puntaje;
-                });
-            } else {
-                throw new ExternalServiceException('El turno no tiene items evaluados.');
+            if (items.length <= 0) {
+                throw new ExternalServiceException('El turno aun no fue evaluado.');
             }
 
-            // Actualizo el turno en la base. 
-            return puntaje;
+            // Determino resultado
+            var puntaje = await this.getPuntuacion(items); 
+            var existeItemAbajoPuntuacionMinima= await this.isItemAbajoPuntuacion(items);
+            
+            if (existeItemAbajoPuntuacionMinima ) return "ITEM ABAJO PUNTUACION MINIMA"; 
+            else if (puntaje > 80 )  return  "VEHICULO SEGURO";
+            else if (puntaje < 40) return  "RECHEQUEAR";
+            else return  "VEHICULO OK";
 
         } catch (err){
             throw new ExternalServiceException('Ocurrio un problema al eliminar items al vehiculo: '+ err.message, err);
         }
+    }    
+
+    async getPuntuacion ( items ){
+        var puntaje = 0 ;            
+        if (items.length > 0){
+            items.forEach((item) => {
+                puntaje = item.puntaje + puntaje;
+            });
+        }
+        return puntaje;
+    }    
+
+    async isItemAbajoPuntuacion ( items ){
+        var puntaje = 0 ;            
+        if (items.length > 0){
+            items.forEach((item) => {
+                if (item.puntaje < 5 ){
+                    console.log("Item abajo puntuacion: " + item);
+                    return true;
+                }
+            });
+        }
+        console.log("NOOOO: ");
+        return false;
     }    
 }
 

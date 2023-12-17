@@ -1,0 +1,711 @@
+{
+	"info": {
+		"_postman_id": "f7dfe606-e31f-4b38-afbd-a6594df21f98",
+		"name": "TP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27652746"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Todos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/?offset=0&limit=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								""
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/3333",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"3333"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"dni\": \"2222\",\r\n    \"email\": \"emali2@sysadmin.com\",\r\n    \"nombre\": \"Nombre2\",\r\n    \"apellido\": \"Apellido2\",\r\n    \"password\": \"2222\", \r\n    \"roles\":  [\r\n        {\"TERAPISTA\":\"Terapista\"},\r\n        {\"PACIENTE\": \"Paciente\"}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Todo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"_id\":\"6575dce8b23631bc2c24c3bd\",\r\n    \"dni\": \"2222 New\",\r\n    \"email\": \"emali1NEW@sysadmin.com\",\r\n    \"nombre\": \"Nombre1NEW\",\r\n    \"apellido\": \"Apellido1\",\r\n    \"password\": \"1111\", \r\n    \"roles\":  [\r\n        {\"TERAPISTA\":\"Terapista\"}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/2222",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"2222"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Parte",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/2222",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"2222"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Turnos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/2222/turnos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"2222",
+								"turnos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Turno",
+			"item": [
+				{
+					"name": "items Vehiculo",
+					"item": [
+						{
+							"name": "Get Items Vehiculo",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/turnos/2023-12-15 11:00/itemsVehiculo/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"turnos",
+										"2023-12-15 11:00",
+										"itemsVehiculo",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Items Vehiculo",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {    \r\n        \"name\": \"motor\",\r\n        \"descripcion\": \"Verificacion motor\", \r\n        \"puntaje\": 8 \r\n    }, \r\n    {    \r\n        \"name\": \"direccion\",\r\n        \"descripcion\": \"Verificacion direccion\" ,\r\n        \"puntaje\": 7\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/turnos/2023-12-15 11:00/itemsVehiculo/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"turnos",
+										"2023-12-15 11:00",
+										"itemsVehiculo",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Items Vehiculo",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/turnos/2023-12-15 11:00/itemsVehiculo/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"turnos",
+										"2023-12-15 11:00",
+										"itemsVehiculo",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Puntaje",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/turnos/2023-12-15 11:00/evaluacion/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"turnos",
+										"2023-12-15 11:00",
+										"evaluacion",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Agenda",
+					"item": [
+						{
+							"name": "Get Todos Turnos De User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/turnos/usuarios/6564c7ee8b12ea4f151d6d61",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"turnos",
+										"usuarios",
+										"6564c7ee8b12ea4f151d6d61"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Todos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/turnos/?offset=0&limit=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos",
+								""
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/turnos/2024-12-26T14:38:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos",
+								"2024-12-26T14:38:00"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{    \r\n    \"patente\": \"123\",\r\n    \"fecha\": \"2023-12-15 11:00\" ,\r\n    \"dniUsuario\": \"2222\",\r\n    \"codigoSucursal\": \"Caballito\"\r\n}, \r\n{    \r\n    \"patente\": \"456\",\r\n    \"fecha\": \"2023-12-15 15:00\" ,\r\n    \"dniUsuario\": \"2222\",\r\n    \"codigoSucursal\": \"Belgrano\"\r\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/turnos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Todo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"patente\": \"XXX123 New\",\r\n    \"fecha\": \"2024-12-26T14:38:00\" ,\r\n    \"dniUsuario\": \"2222\",\r\n    \"codigoSucursal\": \"Caballito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/turnos/2024-12-26T14:37:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos",
+								"2024-12-26T14:37:00"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Parte",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/turnos/2023-12-15T14:00:00.000Z",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos",
+								"2023-12-15T14:00:00.000Z"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sucursal",
+			"item": [
+				{
+					"name": "Get Todos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales/Caballito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales",
+								"Caballito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {    \r\n        \"codigo\": \"Caballito\",\r\n        \"descripcion\": \"Sucursal Caballito\"\r\n    },\r\n    {    \r\n        \"codigo\": \"Belgrano\",\r\n        \"descripcion\": \"Sucursal Belgrano\"\r\n    },\r\n    { \r\n        \"codigo\": \"Palermo\",\r\n        \"descripcion\": \"Sucursal Palermo\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Todo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"codigo\": \"Caballito\",\r\n    \"descripcion\": \"Sucursal Caballito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales/CaballitoNew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales",
+								"CaballitoNew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Nicolas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales/Caballito New",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales",
+								"Caballito New"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All turnos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/sucursales/Caballito/turnos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"sucursales",
+								"Caballito",
+								"turnos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agenda",
+			"item": [
+				{
+					"name": "Lista turnos libres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/turnos/agenda/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"turnos",
+								"agenda",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

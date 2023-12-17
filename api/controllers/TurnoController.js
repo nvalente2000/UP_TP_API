@@ -54,24 +54,12 @@ class TurnoController extends BaseController{
         }); 
     }   
 
-    updateByFecha = async(req, res) => {       
+    updateByFechaAndVerificacionTurnoLibre = async(req, res) => {       
         
         const fecha = req.params.fecha;
         var body = req.body;
-        
-        // Busco ID interno usuario
-        try {
-            var turno = await this.service.findByFecha(fecha);  
-            if (!turno) 
-                return res.status(StatusCodes.NOT_FOUND).send({message:"Fecha no existe turno." }); 
-            body._id = turno._id;
-
-        } catch (err){
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
-        }
-      
-        // UPDATE por ID interno turno
-        await this.service.update(body).then( docs => {
+            
+        await this.service.updateByFechaAndVerificacionTurnoLibre(fecha, body).then( docs => {
             return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
@@ -91,7 +79,6 @@ class TurnoController extends BaseController{
 
     addItemsEvaluadosVehiculo = async (req, res) => {
 
-        console.log("PASSO");
         const fechaTurno = req.params.fecha;
         const items = req.body;
         
@@ -102,13 +89,12 @@ class TurnoController extends BaseController{
         }); 
     }
 
-    addItemsEvaluadosVehiculo = async (req, res) => {
+    updateItemsEvaluadosVehiculo = async (req, res) => {
 
-        console.log("PASSO ADD");
         const fechaTurno = req.params.fecha;
         const items = req.body;
         
-        await this.service.addItemsVehiculo(fechaTurno, items).then( docs => {
+        await this.service.updateItemsVehiculo(fechaTurno, items).then( docs => {
             return res.status(StatusCodes.OK).send({docs});       
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
@@ -118,7 +104,6 @@ class TurnoController extends BaseController{
     deleteItemsEvaluadosVehiculo = async (req, res) => {
 
         const fechaTurno = req.params.fecha;
-        console.log(fechaTurno);
        
         await this.service.deleteItemsVehiculo(fechaTurno).then( docs => {
             return res.status(StatusCodes.OK).send({docs});       
@@ -126,7 +111,6 @@ class TurnoController extends BaseController{
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 
     }
-
     
     getItemsEvaluadosVehiculo = async (req, res) => {
 
@@ -139,12 +123,12 @@ class TurnoController extends BaseController{
         }); 
     }
 
-    getPuntuacion = async (req, res) => {
+    getEvaluacion = async (req, res) => {
 
         const fechaTurno = req.params.fecha;
        
-        await this.service.getPuntuacion(fechaTurno).then( puntaje => {
-            return res.status(StatusCodes.OK).send({puntaje});       
+        await this.service.getEvaluacion(fechaTurno).then( evaluacion => {
+            return res.status(StatusCodes.OK).send({evaluacion});       
         }).catch( err => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({message:err.message }); 
         }); 

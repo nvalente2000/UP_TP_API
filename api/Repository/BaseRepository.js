@@ -17,12 +17,17 @@ class BaseRepository {
     }
 
     update (model){
-        return this.collection.findByIdAndUpdate(model._id, model);
+        return this.collection.findByIdAndUpdate(model._id, model, {new:true});
     }
 
     deleteById(id){
         return this.collection.findByIdAndDelete(id);
     }
+
+    cantidadEntidades(){
+        return this.collection.estimatedDocumentCount();
+    }
+
 }
 
 module.exports = BaseRepository; 

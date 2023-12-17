@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const routes = require("./api/routes/router"); 
+const createRoles = require("./api/config/initialSetup");
 
 // Load enviroment file
 require('dotenv').config(); 
@@ -12,6 +13,7 @@ conn();
 
 // App 
 const app = express();          
+createRoles();
 
 // Midleware
 app.use(express.json());   

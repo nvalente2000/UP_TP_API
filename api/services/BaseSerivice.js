@@ -46,6 +46,14 @@ class BaseService {
             throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
         }
     }
+
+    async cantidadEntidades(){
+        try{      
+            return await this.repo.cantidadEntidades();
+        } catch(err){
+            throw new ExternalServiceException('Ocurrio un problema externo: '+ err.message, err);
+        }
+    }
 }
 
 module.exports = BaseService;

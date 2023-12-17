@@ -8,11 +8,11 @@ const turnoSchemna = new Schema(
         _id:                { type: ObjectId, auto:true },
         fecha :             { type: Date,  unique:true, requared:true },
         patente:            { type: String, required: true }, 
-        sucursalId:         { type: ObjectId, ref:'sucursales'},    // One to May con sucursales.
+        sucursalId:         { type: ObjectId, ref:'sucursales'},     // One to May con sucursales.
         usuarioId:          { type: ObjectId, ref:'usuarios'},       // One to May con usuarios.
         itemsVehiculo : [{ 
             name:{ type: String, requared:true,},
-            descripcion:{ type: String, requared:false}, 
+            observacion:{ type: String, requared:true}, 
             puntaje:{ type: Number, requared:true}, 
         }]
     },
