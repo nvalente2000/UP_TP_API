@@ -258,6 +258,7 @@ class TurnoService extends BaseService{
             // Determino resultado
             var puntaje = await this.getPuntuacion(items); 
             var existeItemAbajoPuntuacionMinima= await this.isItemAbajoPuntuacion(items);
+            console.log(existeItemAbajoPuntuacionMinima);
             
             if (existeItemAbajoPuntuacionMinima ) return "ITEM ABAJO PUNTUACION MINIMA"; 
             else if (puntaje > 80 )  return  "VEHICULO SEGURO";
@@ -280,17 +281,18 @@ class TurnoService extends BaseService{
     }    
 
     async isItemAbajoPuntuacion ( items ){
-        var puntaje = 0 ;            
+        var puntaje = 0 ;       
+        var result = false;      
         if (items.length > 0){
             items.forEach((item) => {
                 if (item.puntaje < 5 ){
                     console.log("Item abajo puntuacion: " + item);
-                    return true;
+                    result = true;
                 }
             });
         }
-        console.log("NOOOO: ");
-        return false;
+
+        return result;
     }    
 }
 
